@@ -34,30 +34,56 @@
 // document.getElementById('root')
 // );
 
-class Todolist extends React.Component {
-	render() {
-		return (
-			<div>
-				<h1> TODO list </h1>
-				<label for="startdate">Enter Task:</label>
-				<input type="text" name="taskname" id="taskid" />
-					<br/>
-				<label for="startdate">Start Date:</label>
-					<input type="date" />
-					<br/>
-				<label for="enddate">End Date:</label>
-				<input type="date" />
-				<br/>
-				<button onclick="printText()"> Add Task </button>	
-				{new Date().toLocaleTimeString()}
+// class Todolist extends React.Component {
+// 	render() {
+// 		return (
+// 			<div>
+// 				<h1> TODO list </h1>
+// 				<label for="startdate">Enter Task:</label>
+// 				<input type="text" name="taskname" id="taskid" />
+// 					<br/>
+// 				<label for="startdate">Start Date:</label>
+// 					<input type="date" />
+// 					<br/>
+// 				<label for="enddate">End Date:</label>
+// 				<input type="date" />
+// 				<br/>
+// 				<button onclick="printText()"> Add Task </button>	
+// 				{new Date().toLocaleTimeString()}
 
 			
-			</div>
-			);
+// 			</div>
+// 			);
+// 	}
+
+// }
+// ReactDOM.render(
+// <Todolist />,
+// document.getElementById('root')
+// );
+class Clock extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {date: props.date};
 	}
 
+	componentDidMount() {
+		this.taskid = setInterval(()=> this.setState({date: new Date()}),1000);
+	}
+	componentWillUnmount() {
+		clearInterval(this.taskid);
+	}
+	render()
+	{
+		return(
+			<div>
+				<h1> This time is {this.state.date.toLocaleTimeString()} </h1>
+
+				</div>
+			);
+	}
 }
 ReactDOM.render(
-<Todolist />,
-document.getElementById('root')
-);
+	<Clock date= {new Date()} />
+	,document.getElementById('root')
+	);
