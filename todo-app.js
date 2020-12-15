@@ -47,7 +47,8 @@ function addTask2 () {
  class Todolist extends React.Component {
  	constructor(props) {
  		super(props);
- 		this.taskElement= this.props.list.map((t)=> <Task name= {t.name}/>);
+ 		this.state = {list:props.list}
+ 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name}/>);
  	}
 
  	addTask () {
@@ -76,14 +77,51 @@ function addTask2 () {
  				<ol>
  				 {this.taskElement}
  				 </ol>
- 						
+ 				< TaskNameForm/>
  			</div>
  			);
  	}
 
  }
 
-const tasks = [{name:"React Video-2"},{name:"Final React Video"},{name:"Dinner"},{name:"IDL Assignment"}]
+
+ class TaskNameForm extends React.Component {
+ 	constructor(props){
+ 		super(props);
+ 		this.state = {value:''};
+ 		this.handleChange = this.handleChange.bind(this);
+ 		this.handleSubmit = this.handleSubmit.bind(this);
+ 	}
+
+ 	handleSubmit(event) {
+ 		event.preventDefault();
+ 		
+ 		tasks.push({id:Date.now() , name:this.state.value})
+ 		console.log(this.state.value)
+ 		console.log(tasks)
+ 	
+ 	
+ 		
+ 	}
+
+ 	handleChange(event) {
+ 		this.setState({value:event.target.value});
+ 	
+ 		
+ 	}
+
+ 	render() {
+ 		return (
+ 			<form onSubmit={this.handleSubmit}>
+ 				<input type='text'   onChange= {this.handleChange} />
+ 				<input type='submit' value='Add Task' onSubmit= {this.handleSubmit} />
+ 			</form>
+ 		);
+
+ 	}
+ }
+
+const tasks = [{id: 0,name:"React Video-2"},{id: 1,name:"Final React Video"},{id: 2,name:"Dinner"},{id:3,name:"IDL Assignment"}]
 ReactDOM.render(
  <Todolist list={tasks}/>,
  document.getElementById('root')
