@@ -36,7 +36,8 @@
 
 
 function Task (props) {
-	return <li> {props.name}  {new Date().toLocaleTimeString()} </li>
+	const x= new Date().toLocaleTimeString();
+	return <li> {props.name}  {x} </li>
 }
 
 
@@ -47,13 +48,15 @@ function addTask2 () {
  class Todolist extends React.Component {
  	constructor(props) {
  		super(props);
- 		this.state = {list:props.list}
- 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name}/>);
+ 		this.state = {list:props.list};
+ 		
+ 		this.handleAddTask = this.handleAddTask.bind(this);
  	}
 
- 	addTask (task) {
- 		this.state.list.push(task)
- 		console.log("add task clicked");
+ 	handleAddTask (tasklist) {
+ 		this.setState({list: tasklist})
+ 		console.log("handleAddTask called and hence render called again");
+ 		console.log("tasklist in handleAddTask"+tasklist)
  	}
 
 
@@ -62,23 +65,17 @@ function addTask2 () {
 
 
  	render() {
- 		
- 		
- 	
-
- 	
-
-
-
-
+ 		const tasklist = this.state.list;
+ 		// console.log("tasklist",this.taskElement)
+ 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name}/>);
  		return (
- 			<div>
- 			<button onClick = {addTask2}> Add task </button>
+ 			<div>		
  				<h1> TODO list </h1>
  				<ol>
  				 {this.taskElement}
  				 </ol>
- 				< TaskNameForm/>
+ 				< TaskNameForm tasklist={tasklist} onAddTask={this.handleAddTask}/>
+ 			 // When  onAddTask event is raised handleAddTask is invoked
  			</div>
  			);
  	}
@@ -95,14 +92,11 @@ function addTask2 () {
  	}
 
  	handleSubmit(event) {
- 		event.preventDefault();
- 		
- 		tasks.push({id:Date.now() , name:this.state.value})
- 		console.log(this.state.value)
- 		console.log(tasks)
- 	
- 	
- 		
+
+ 		const temp = this.props.tasklist;
+ 		event.preventDefault();	
+ 		temp.push({id:Date.now() , name:this.state.value});
+ 		this.props.onAddTask(temp);		
  	}
 
  	handleChange(event) {
@@ -121,6 +115,8 @@ function addTask2 () {
 
  	}
  }
+
+
 
 const tasks = [{id: 0,name:"React Video-2"},{id: 1,name:"Final React Video"},{id: 2,name:"Dinner"},{id:3,name:"IDL Assignment"}]
 ReactDOM.render(
