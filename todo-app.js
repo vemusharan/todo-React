@@ -51,7 +51,8 @@ function addTask2 () {
  		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name}/>);
  	}
 
- 	addTask () {
+ 	addTask (task) {
+ 		this.state.list.push(task)
  		console.log("add task clicked");
  	}
 
