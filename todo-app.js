@@ -36,14 +36,11 @@
 
 
 function Task (props) {
-	const x= new Date().toLocaleTimeString();
-	return <li> {props.name}  {x} </li>
+
+	return <li> {props.name}  {props.duedate.toLocaleTimeString()} </li>
 }
 
 
-function addTask2 () {
-	console.log("function working");
-}
 
  class Todolist extends React.Component {
  	constructor(props) {
@@ -67,7 +64,7 @@ function addTask2 () {
  	render() {
  		const tasklist = this.state.list;
  		// console.log("tasklist",this.taskElement)
- 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name}/>);
+ 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name} duedate={t.duedate}/>);
  		return (
  			<div>		
  				<h1> TODO list </h1>
@@ -95,7 +92,7 @@ function addTask2 () {
 
  		const temp = this.props.tasklist;
  		event.preventDefault();	
- 		temp.push({id:Date.now() , name:this.state.value});
+ 		temp.push({id:Date.now() , name:this.state.value , duedate:new Date()});
  		this.props.onAddTask(temp);		
  	}
 
@@ -118,9 +115,9 @@ function addTask2 () {
 
 
 
-const tasks = [{id: 0,name:"React Video-2"},{id: 1,name:"Final React Video"},{id: 2,name:"Dinner"},{id:3,name:"IDL Assignment"}]
+
 ReactDOM.render(
- <Todolist list={tasks}/>,
+ <Todolist list={[]}/>,
  document.getElementById('root')
  );
 
