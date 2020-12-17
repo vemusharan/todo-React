@@ -15,7 +15,6 @@ function Task (props) {
  	}
  	render() {
  		const tasklist = this.state.list;
- 		// console.log("tasklist",this.taskElement)
  		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name} startdate = {t.startdate} duedate={t.duedate}/>);
  		return (
  			<div>		
