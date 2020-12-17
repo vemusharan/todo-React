@@ -50,8 +50,11 @@ function Task (props) {
  		this.handleAddTask = this.handleAddTask.bind(this);
  	}
 
- 	handleAddTask (tasklist) {
- 		this.setState({list: tasklist})
+ 	handleAddTask (task) {
+
+
+ 		this.state.list.push(task);
+ 		this.setState({list: this.state.list})
  		console.log("handleAddTask called and hence render called again");
  		console.log("tasklist in handleAddTask"+tasklist)
  	}
@@ -71,8 +74,8 @@ function Task (props) {
  				<ol>
  				 {this.taskElement}
  				 </ol>
- 				< TaskNameForm tasklist={tasklist} onAddTask={this.handleAddTask}/>
- 			 // When  onAddTask event is raised handleAddTask is invoked
+ 				< TaskNameForm  onAddTask={this.handleAddTask}/>
+ 			 
  			</div>
  			);
  	}
@@ -90,9 +93,9 @@ function Task (props) {
 
  	handleSubmit(event) {
 
- 		const temp = this.props.tasklist;
+ 		
  		event.preventDefault();	
- 		temp.push({id:Date.now() , name:this.state.value , duedate:new Date()});
+ 		const temp = {id:Date.now() , name:this.state.value , duedate:new Date()};
  		this.props.onAddTask(temp);		
  	}
 
