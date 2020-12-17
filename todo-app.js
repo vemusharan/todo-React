@@ -1,114 +1,69 @@
-// function tick() {
-// 	console.log(name)
-// 	const element = (
-// 		<div>
-			
-// 			<h1> Hello {name} </h1>
-// 			<h2> Today is {new Date().toLocaleTimeString()} </h2>
-
-
-// 		</div>
-// 		);
-// 				ReactDOM.render(
-// 		element,document.getElementById('root'));
-
-// }
-// setInterval(tick,1000);
-
-
-// function Welcome(props) {
-// 	return <h1> Hello , {props.name} </h1>;
-// }
-
-// function App() {
-// 	return (
-// 	<div>
-// 	<Welcome name= 'Sharan' />
-// 	<Welcome name= 'Vamshi' />
-// 	</div>
-// 	);
-// }
-
-// ReactDOM.render(
-// <App/>,
-// document.getElementById('root')
-// );
-
-
 function Task (props) {
-
-	return <li> {props.name}  {props.duedate.toLocaleTimeString()} </li>
+	return <li>  <b> {props.name} </b>   <i> Start Date: </i> {props.startdate} <i> End Date: </i> {props.duedate} </li>
 }
-
-
-
  class Todolist extends React.Component {
  	constructor(props) {
  		super(props);
- 		this.state = {list:props.list};
- 		
+ 		this.state = {list:props.list};		
  		this.handleAddTask = this.handleAddTask.bind(this);
  	}
-
  	handleAddTask (task) {
-
-
  		this.state.list.push(task);
  		this.setState({list: this.state.list})
  		console.log("handleAddTask called and hence render called again");
  		console.log("tasklist in handleAddTask"+tasklist)
  	}
-
-
-
-
-
-
  	render() {
  		const tasklist = this.state.list;
  		// console.log("tasklist",this.taskElement)
- 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name} duedate={t.duedate}/>);
+ 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name} startdate = {t.startdate} duedate={t.duedate}/>);
  		return (
  			<div>		
  				<h1> TODO list </h1>
  				<ol>
  				 {this.taskElement}
  				 </ol>
- 				< TaskNameForm  onAddTask={this.handleAddTask}/>
- 			 
+ 				< TaskNameForm  onAddTask={this.handleAddTask}/> 			 
  			</div>
  			);
  	}
-
  }
-
 
  class TaskNameForm extends React.Component {
  	constructor(props){
  		super(props);
- 		this.state = {value:''};
+ 		this.state = {value:'',date:'' , startdate:''};
  		this.handleChange = this.handleChange.bind(this);
  		this.handleSubmit = this.handleSubmit.bind(this);
+ 		this.handleDate   = this.handleDate.bind(this);
+ 		this.handleStartdate = this.handleStartdate.bind(this);
  	}
-
- 	handleSubmit(event) {
-
- 		
+ 	handleSubmit(event) {	
  		event.preventDefault();	
- 		const temp = {id:Date.now() , name:this.state.value , duedate:new Date()};
+ 		const temp = {id:Date.now() , name:this.state.value , startdate:this.state.startdate , duedate:this.state.date};
  		this.props.onAddTask(temp);		
  	}
-
  	handleChange(event) {
- 		this.setState({value:event.target.value});
- 	
- 		
+ 		this.setState({value:event.target.value});		
  	}
-
+	handleDate(event) {
+ 		this.setState({date:event.target.value});
+ 	}
+ 	handleStartdate(event) {
+ 		this.setState({startdate:event.target.value});
+ 	}
  	render() {
  		return (
  			<form onSubmit={this.handleSubmit}>
- 				<input type='text'   onChange= {this.handleChange} />
+ 				<label > Enter Task : </label>
+				<input type='text'   onChange= {this.handleChange} />
+ 				&nbsp;&nbsp;
+ 				<label >Start Date : </label>
+ 				<input type='Date'   onChange= {this.handleStartdate}   />
+ 				&nbsp;&nbsp;
+ 				<label > Duedate : </label>
+ 				<input type='Date'   onChange= {this.handleDate}   />
+ 				&nbsp;&nbsp;
  				<input type='submit' value='Add Task' onSubmit= {this.handleSubmit} />
  			</form>
  		);
@@ -116,39 +71,7 @@ function Task (props) {
  	}
  }
 
-
-
-
 ReactDOM.render(
  <Todolist list={[]}/>,
  document.getElementById('root')
  );
-
-
-//
-// class Clock extends React.Component {
-// 	constructor(props){
-// 		super(props);
-// 		this.state = {date: props.date};
-// 	}
-
-// 	componentDidMount() {
-// 		this.taskid = setInterval(()=> this.setState({date: new Date()}),1000);
-// 	}
-// 	componentWillUnmount() {
-// 		clearInterval(this.taskid);
-// 	}
-// 	render()
-// 	{
-// 		return(
-// 			<div>
-// 				<h1> This time is {this.state.date.toLocaleTimeString()} </h1>
-
-// 				</div>
-// 			);
-// 	}
-// }
-// ReactDOM.render(
-// 	<Clock date= {new Date()} />
-// 	,document.getElementById('root')
-// 	);
