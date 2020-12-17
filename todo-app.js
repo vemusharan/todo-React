@@ -1,6 +1,4 @@
-function Task (props) {
-	return <li>  <b> {props.name} </b>   <i> Start Date: </i> {props.startdate} <i> End Date: </i> {props.duedate} </li>
-}
+
  class Todolist extends React.Component {
  	constructor(props) {
  		super(props);
@@ -14,13 +12,13 @@ function Task (props) {
  		console.log("tasklist in handleAddTask"+tasklist)
  	}
  	render() {
- 		const tasklist = this.state.list;
- 		this.taskElement= this.state.list.map((t)=> <Task key={t.id} name= {t.name} startdate = {t.startdate} duedate={t.duedate}/>);
+ 		const tasklist = this.state.list;			
+ 		this.taskElement= this.state.list.map((t)=> <li> <b> {t.name} </b> <i> Start Date </i> {t.startdate} <i> End Date </i> {t.duedate}  </li>);
  		return (
  			<div>		
  				<h1> TODO list </h1>
  				<ol>
- 				 {this.taskElement}
+ 				 {this.taskElement} 
  				 </ol>
  				< TaskNameForm  onAddTask={this.handleAddTask}/> 			 
  			</div>
@@ -66,7 +64,6 @@ function Task (props) {
  				<input type='submit' value='Add Task' onSubmit= {this.handleSubmit} />
  			</form>
  		);
-
  	}
  }
 
