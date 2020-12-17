@@ -1,19 +1,27 @@
-
  class Todolist extends React.Component {
  	constructor(props) {
  		super(props);
  		this.state = {list:props.list};		
  		this.handleAddTask = this.handleAddTask.bind(this);
+ 		this.deleteTask = this.deleteTask.bind(this);
  	}
  	handleAddTask (task) {
  		this.state.list.push(task);
  		this.setState({list: this.state.list})
  		console.log("handleAddTask called and hence render called again");
- 		console.log("tasklist in handleAddTask"+tasklist)
+ 		console.log("tasklist in handleAddTask"+tasklist);
  	}
+
+	deleteTask (object) {
+		event.preventDefault();
+		const temp = object;
+		console.log(temp);
+ 	}
+
+ 
  	render() {
  		const tasklist = this.state.list;			
- 		this.taskElement= this.state.list.map((t)=> <li> <b> {t.name} </b> <i> Start Date </i> {t.startdate} <i> End Date </i> {t.duedate}  </li>);
+ 		this.taskElement= this.state.list.map((t)=> <li> <b> {t.name} </b> <i> Start Date </i> {t.startdate} <i> End Date </i> {t.duedate}  <button onClick= { () => this.deleteTask(t.id)}> Delete </button>    </li>);
  		return (
  			<div>		
  				<h1> TODO list </h1>
