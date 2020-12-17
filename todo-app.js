@@ -11,17 +11,14 @@
  		console.log("handleAddTask called and hence render called again");
  		console.log("tasklist in handleAddTask"+tasklist);
  	}
-
 	deleteTask (object) {
 		event.preventDefault();
-		const temp = object;
-		console.log(temp);
+		this.state.list.pop(object)
+		this.setState({list:this.state.list})
  	}
-
- 
  	render() {
  		const tasklist = this.state.list;			
- 		this.taskElement= this.state.list.map((t)=> <li> <b> {t.name} </b> <i> Start Date </i> {t.startdate} <i> End Date </i> {t.duedate}  <button onClick= { () => this.deleteTask(t.id)}> Delete </button>    </li>);
+ 		this.taskElement= this.state.list.map((t)=> <li> <b> {t.name} </b> <i> Start Date </i> {t.startdate} <i> End Date </i> {t.duedate}  <button onClick= { () => this.deleteTask(t)}> Delete </button>    </li>);
  		return (
  			<div>		
  				<h1> TODO list </h1>
@@ -33,7 +30,6 @@
  			);
  	}
  }
-
  class TaskNameForm extends React.Component {
  	constructor(props){
  		super(props);
